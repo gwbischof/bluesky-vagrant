@@ -15,4 +15,5 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "~/.ssh", destination: "$HOME/.ssh"
   config.vm.provision "file", source: "~/.vimrc", destination: "$HOME/.vimrc"
   config.vm.provision "file", source: "~/.gitconfig", destination: ".gitconfig"
+  config.vm.synced_folder "~/", "/home/vagrant/host_home"
 end
