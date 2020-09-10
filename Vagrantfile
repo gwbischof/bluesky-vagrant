@@ -10,10 +10,18 @@ Vagrant.configure("2") do |config|
     echo 'export PATH="/home/vagrant/miniconda/bin:$PATH"' >> /home/vagrant/.bashrc
     source /home/vagrant/.bashrc
     chown -R vagrant:vagrant /home/vagrant/miniconda
-    /home/vagrant/miniconda/bin/conda install conda-build anaconda-client -y -q
+    /home/vagrant/miniconda/bin/conda install conda-build anaconda-client conda-pack -y -q
+    /home/vagrant/miniconda/condabin/conda init bash
   SHELL
   config.vm.provision "file", source: "~/.ssh", destination: "$HOME/.ssh"
   config.vm.provision "file", source: "~/.vimrc", destination: "$HOME/.vimrc"
   config.vm.provision "file", source: "~/.gitconfig", destination: ".gitconfig"
+  config.vm.provision "file", source: "collection-2020-2.0rc8.tar.gz", destination: "collection-2020-2.0rc8.tar.gz"
   config.vm.synced_folder "~/", "/home/vagrant/host_home"
+  config.vm.provision "shell", inline: <<-SHELL
+    mkdir /home/vagrant/miniconda/envs/collection-2020-2.0rc8
+    tar -xvzf collection-2020-2.0rc8.tar.gz -C /home/vagrant/miniconda/envs/collection-2020-2.0rc8/
+    /home/vagrant/miniconda/condabin/conda activate /home/vagrant/miniconda/envs/collection-2020-2.0rc8/
+    conda-unpack
+  SHELL
 end
