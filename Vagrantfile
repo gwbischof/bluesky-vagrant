@@ -21,7 +21,8 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     mkdir /home/vagrant/miniconda/envs/collection-2020-2.0rc8
     tar -xvzf collection-2020-2.0rc8.tar.gz -C /home/vagrant/miniconda/envs/collection-2020-2.0rc8/
-    /home/vagrant/miniconda/condabin/conda activate /home/vagrant/miniconda/envs/collection-2020-2.0rc8/
+    su - vagrant
+    source activate /home/vagrant/miniconda/envs/collection-2020-2.0rc8/
     conda-unpack
   SHELL
 end
