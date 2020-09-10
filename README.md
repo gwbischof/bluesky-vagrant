@@ -1,8 +1,8 @@
-# Bluesky vagrant VM
+# Bluesky Vagrant
 
 ## Procedure
 * `git clone https://github.com/gwbischof/bluesky-vagrant.git`
-* `cd bluesky-vagrant1
+* `cd bluesky-vagrant`
 * `vagrant up`
 * `vagrant ssh`
 * `conda init`
