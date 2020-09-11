@@ -25,4 +25,7 @@ Vagrant.configure("2") do |config|
     source activate /home/vagrant/miniconda/envs/collection-2020-2.0rc8/
     conda-unpack
   SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+    yes | sudo dnf install podman
+  SHELL
 end
