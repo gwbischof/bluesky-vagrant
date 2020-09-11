@@ -35,8 +35,15 @@ Vagrant.configure("2") do |config|
     yes | sudo yum install git
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
-    su - vagrant
-    cd
-    git clone https://github.com/bluesky/bluesky-pods.git
+    git clone https://github.com/bluesky/bluesky-pods.git /home/vagrant/bluesky-pods
+  SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+    cd /home/vagrant/bluesky-pods
+    bash image_builders/build_bluesky_base_image.sh
+    bash image_builders/build_bluesky_image.sh
+    bash image_builders/build_caproto_image.sh
+    bash image_builders/build_databroker_server_image.sh
+    bash image_builders/build_typhos_image.sh
+    bash start_core_pod.sh
   SHELL
 end
