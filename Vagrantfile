@@ -29,10 +29,10 @@ Vagrant.configure("2") do |config|
     yes | sudo dnf install podman
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
-    sudo yum install -y buildah
+    yes | sudo yum install -y buildah
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
-    sudo yum install git
+    yes | sudo yum install git
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
     su - vagrant
