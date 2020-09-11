@@ -28,4 +28,15 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     yes | sudo dnf install podman
   SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo yum install -y buildah
+  SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo yum install git
+  SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+    su - vagrant
+    cd
+    git clone https://github.com/bluesky/bluesky-pods.git
+  SHELL
 end
