@@ -17,6 +17,8 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "~/.vimrc", destination: "$HOME/.vimrc"
   config.vm.provision "file", source: "~/.gitconfig", destination: ".gitconfig"
   config.vm.provision "file", source: "collection-2020-2.0rc8.tar.gz", destination: "collection-2020-2.0rc8.tar.gz"
+  config.ssh.forward_agent = true
+  config.ssh.forward_x11 = true
   config.vm.synced_folder "~/", "/home/vagrant/host_home"
   config.vm.provision "shell", inline: <<-SHELL
     mkdir /home/vagrant/miniconda/envs/collection-2020-2.0rc8
@@ -38,10 +40,17 @@ Vagrant.configure("2") do |config|
     yes | sudo yum install git
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
+    yes | sudo yum install xorg-x11-xauth
+  SHELL
+  config.vm.provision "shell", inline: <<-SHELL
     su - vagrant
     git clone https://github.com/bluesky/bluesky-pods.git /home/vagrant/bluesky-pods
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
+    sudo usermod --add-subuids 200000-201000 --add-subgids 200000-201000 $USER
+    echo "DefaultLimitNOFILE=65536" >> /etc/systemd/user.conf
+    echo "DefaultLimitNOFILE=65536" >> /etc/systemd/system.conf
+    podman system migrate
     cd /home/vagrant/bluesky-pods
     bash image_builders/build_bluesky_base_image.sh
     bash image_builders/build_bluesky_image.sh
