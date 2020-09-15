@@ -43,8 +43,8 @@ Vagrant.configure("2") do |config|
     yes | sudo yum install xorg-x11-xauth
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
-    su - vagrant
     git clone https://github.com/bluesky/bluesky-pods.git /home/vagrant/bluesky-pods
+    sudo chown -R vagrant:vagrant /home/vagrant/bluesky-pods
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
     sudo usermod --add-subuids 200000-201000 --add-subgids 200000-201000 $USER
