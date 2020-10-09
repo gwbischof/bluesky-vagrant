@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "bento/centos-8.1"
+  config.vm.box = "bento/centos-8.2"
   config.vm.network "private_network", ip: "192.168.64.30"
   config.vm.hostname = "dama"
   config.vm.provision "shell", inline: <<-SHELL
@@ -57,6 +57,6 @@ Vagrant.configure("2") do |config|
     bash image_builders/build_caproto_image.sh
     bash image_builders/build_databroker_server_image.sh
     bash image_builders/build_typhos_image.sh
-    bash start_core_pod.sh
+    bash start_core_pods.sh
   SHELL
 end
